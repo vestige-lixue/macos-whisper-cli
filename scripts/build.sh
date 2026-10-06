@@ -36,7 +36,7 @@ libraries=(build/bin/*.dylib build/bin/*.so build/bin/*.metallib)
 ((${#libraries[@]} > 0))
 cp -a build/bin/whisper-cli "${libraries[@]}" "package/$bundle/"
 cp LICENSE "package/$bundle/LICENSE"
-lipo -verify_arch "$CPU" "package/$bundle/whisper-cli"
+lipo "package/$bundle/whisper-cli" -verify_arch "$CPU"
 tar -czf "$bundle.tar.gz" -C package "$bundle"
 
 # Exercise the distributed layout with the build tree unavailable.
