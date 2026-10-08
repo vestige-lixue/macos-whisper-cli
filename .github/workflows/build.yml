@@ -127,12 +127,6 @@ jobs:
     steps:
       - uses: actions/checkout@v7.0.1
         with:
-          persist-credentials: false
-      - uses: actions/setup-node@v7.0.0
-        with:
-          node-version: '24'
-          package-manager-cache: false
-      - name: Record repository activity at most once every 28 days
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        run: node scripts/release.mjs keepalive
+          ref: ${{ github.event.repository.default_branch }}
+      - name: Keep scheduled checks active after 50 days of inactivity
+        uses: ./.github/actions/keepalive

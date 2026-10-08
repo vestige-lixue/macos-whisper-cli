@@ -114,18 +114,6 @@ export async function publish(api, repository, source, files, builderCommit, run
     console.log(`Published https://github.com/${repository}/releases/tag/${source.release_tag}`);
 }
 
-export async function keepalive(api, repository, now = new Date()) {
-    const { default_branch: branch } = await api(`/repos/${repository}`);
-    const path = `/repos/${repository}/contents/.github/last-check`;
-    const file = await api(`${path}?ref=${encodeURIComponent(branch)}`);
-    const previous = file ? Date.parse(Buffer.from(file.content, "base64").toString("utf8")) : NaN;
-    if (Number.isFinite(previous) && now.getTime() - previous < 28 * 24 * 60 * 60 * 1000) return;
-    await api(path, { method: "PUT", body: {
-        message: "Keep scheduled upstream checks active", branch,
-        content: Buffer.from(now.toISOString()).toString("base64"), ...(file ? { sha: file.sha } : {})
-    } });
-}
-
 export async function api(path, { method = "GET", body, data } = {}) {
     const url = new URL(path, "https://api.github.com");
     if (!["api.github.com", "uploads.github.com"].includes(url.hostname)) throw new Error("Unexpected GitHub API host.");
@@ -176,8 +164,7 @@ async function main() {
         await publish(api, repository, source, files, process.env.GITHUB_SHA,
             `https://github.com/${repository}/actions/runs/${process.env.GITHUB_RUN_ID}`);
     }
-    else if (command === "keepalive") await keepalive(api, repository);
-    else throw new Error("Usage: node scripts/release.mjs check|publish|keepalive");
+    else throw new Error("Usage: node scripts/release.mjs check|publish");
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

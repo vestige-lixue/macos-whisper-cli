@@ -19,16 +19,7 @@ Both builds must pass upstream tests and an extracted-archive JSON smoke test be
 
 To start, push these files to the default branch and run **Actions → Build macOS Whisper CLI → Run workflow**, or wait for the schedule. Leave `whisper_tag` empty for the latest stable version, or specify a stable tag. The built-in `GITHUB_TOKEN` is sufficient; no additional secrets are needed.
 
-A keepalive job updates `.github/last-check` at most once every 28 days to keep scheduled checks active. Branch rules must allow this maintenance commit.
-
 ## Scripts
 
 - `scripts/build.sh`: compile, test and package the CLI.
 - `scripts/release.mjs`: select releases, decide whether to build, verify and publish assets, and maintain repository activity.
-- `scripts/release.test.mjs`: test release handling with a mock API.
-
-Run the tests without compiling Whisper:
-
-```sh
-node --test scripts/release.test.mjs
-```
