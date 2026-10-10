@@ -15,7 +15,7 @@ Archives include `whisper-cli`, runtime libraries and the upstream MIT license. 
 
 The [workflow](.github/workflows/build.yml) checks stable upstream releases daily at **03:23 UTC**. It builds only when the source commit or build configuration changes, using the same pinned commit for both architectures.
 
-Both builds must pass upstream tests and an extracted-archive JSON smoke test before publication. Releases include both archives, `SHA256SUMS` and `build.json` with source and build details. Failed builds and incomplete drafts retry on later checks; published assets are never overwritten. Older versions do not replace Latest.
+Both builds must pass architecture verification and an extracted-archive JSON smoke test before publication. Releases include both archives, `SHA256SUMS` and `build.json` with source and build details. Failed builds and incomplete drafts retry on later checks; published assets are never overwritten. Older versions do not replace Latest.
 
 To start, push these files to the default branch and run **Actions → Build macOS Whisper CLI → Run workflow**, or wait for the schedule. Leave `whisper_tag` empty for the latest stable version, or specify a stable tag. The built-in `GITHUB_TOKEN` is sufficient; no additional secrets are needed.
 

@@ -77,7 +77,7 @@ export async function publish(api, repository, source, files, builderCommit, run
     const notes = [
         `Source: https://github.com/${upstream}/tree/${source.commit} (${source.upstream_tag}).`,
         "Built for macOS 13.3 or newer. arm64 includes Metal; x64 uses CPU backends.",
-        "Both architectures passed upstream gh tests and an extracted-archive JSON smoke test using the test model.",
+        "Both architectures passed architecture verification and an extracted-archive JSON smoke test using the test model.",
         "Archives include the CLI, runtime libraries and Whisper's MIT license. Models are not included.",
         "These packages are not Developer ID signed or notarized; application packaging handles distribution signing.",
         `Build recipe: ${source.recipe}. Build: ${runURL}.`

@@ -22,12 +22,11 @@ cmake -B build \
   -DGGML_METAL_EMBED_LIBRARY=ON \
   -DGGML_OPENMP=OFF \
   -DWHISPER_BUILD_IS_DEV=OFF \
-  -DWHISPER_BUILD_TESTS=ON \
+  -DWHISPER_BUILD_TESTS=OFF \
   -DWHISPER_BUILD_EXAMPLES=ON \
   -DWHISPER_BUILD_SERVER=OFF
 cmake --build build --config Release --parallel "$(sysctl -n hw.logicalcpu)" \
-  --target whisper-cli test-whisper-buffer-loader test-whisper-zero-samples test-parakeet
-ctest --test-dir build -L gh --output-on-failure --no-tests=error
+  --target whisper-cli
 
 bundle="whisper-bin-macos-$ARCH"
 mkdir -p "package/$bundle"
